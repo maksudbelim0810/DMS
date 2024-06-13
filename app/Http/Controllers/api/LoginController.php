@@ -33,7 +33,10 @@ class LoginController extends BaseController
         
         if (!$user || !Hash::check($request->password, $user->password)) {
             return $this->sendError('Invalid credentials' , [], 401);
-        } 
+        }
+        if ($user->is_active == 1) {
+            return $this->sendError('Please active your account' , [], 401);
+        }
         
         if($user->role_id == 1){
             $user->role_name='Admin';

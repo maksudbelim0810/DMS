@@ -6,6 +6,8 @@ use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\ForgotPasswordController;
+use App\Http\Controllers\api\ModelMasterController;
+use App\Http\Controllers\api\AssemblyMasterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,7 +27,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('forget-password-mail-send', [ForgotPasswordController::class, 'forgetPassword']);
 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['custom.auth'])->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('change-password', [LoginController::class, 'changePassword']);
 
@@ -40,10 +42,22 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::post('user/list', [UserController::class, 'index']);
-    Route::get('user/create', [UserController::class, 'create']);
     Route::post('user/store', [UserController::class, 'store']);
-    Route::get('user/{id}', [UserController::class, 'show']);
     Route::get('user/{id}/details', [UserController::class, 'edit']);
     Route::post('user/{id}/update', [UserController::class, 'update']);
     Route::post('user/{id}/delete', [UserController::class, 'destroy']);
+
+
+    Route::post('model_master/list', [ModelMasterController::class, 'index']);
+    Route::post('model_master/store', [ModelMasterController::class, 'store']);
+    Route::get('model_master/{id}/details', [ModelMasterController::class, 'edit']);
+    Route::post('model_master/{id}/update', [ModelMasterController::class, 'update']);
+    Route::post('model_master/{id}/delete', [ModelMasterController::class, 'destroy']);
+
+
+    Route::post('assembly_master/list', [AssemblyMasterController::class, 'index']);
+    Route::post('assembly_master/store', [AssemblyMasterController::class, 'store']);
+    Route::get('assembly_master/{id}/details', [AssemblyMasterController::class, 'edit']);
+    Route::post('assembly_master/{id}/update', [AssemblyMasterController::class, 'update']);
+    Route::post('assembly_master/{id}/delete', [AssemblyMasterController::class, 'destroy']);
 });
